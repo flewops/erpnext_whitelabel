@@ -53,3 +53,6 @@ jspm_packages/
 
 # Aider AI Chat
 .aider*
+
+# Built by `bench build` (locally and on Frappe Cloud deploys)
+flewops_whitelabel/public/dist/

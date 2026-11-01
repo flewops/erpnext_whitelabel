@@ -1,13 +1,14 @@
 name: CI
 
 # lint  -> the repo's pre-commit hooks
-# tests -> the app's integration tests on a fresh v16 site with ERPNext, at the same Frappe /
-#          ERPNext releases the FlewOps client images pin
+# tests -> the app's integration tests on a fresh v16 site with ERPNext
+#
+# Runs on pushes to version-16 (development) and main (what Frappe Cloud deploys), and on the
+# pull requests that carry version-16 into main.
 
 on:
   push:
     branches: [version-16, main]
-    tags: ["v*"]
   pull_request:
   workflow_dispatch:
 
