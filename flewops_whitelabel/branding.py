@@ -150,6 +150,10 @@ def sync_text_replacements(settings, previous=None):
 			frappe.delete_doc_if_exists("Translation", row.translation)
 
 
+def after_setup_wizard(args=None):
+	apply()
+
+
 def boot_session(bootinfo):
 	if frappe.session.user == "Guest":
 		return
@@ -179,6 +183,14 @@ def rebrand_app_tiles(app_data: list[dict], settings):
 				app["app_title"] = row.app_title
 			if row.logo:
 				app["app_logo_url"] = row.logo
+
+
+def extend_bootinfo(bootinfo):
+	# Frappe Cloud shows its billing menu and trial banner (billing.bundle.js) and its support and
+	# update links in About to System Managers when is_fc_site is set, using site_info.
+	if bootinfo.get("is_fc_site") and cint(get_settings().hide_frappe_cloud):
+		bootinfo.is_fc_site = False
+		bootinfo.site_info = None
 
 
 def update_website_context(context):

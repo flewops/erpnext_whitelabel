@@ -27,6 +27,8 @@
   "disable_onboarding",
   "column_break_notifications",
   "disable_update_notifications",
+  "frappe_cloud_section",
+  "hide_frappe_cloud",
   "text_section",
   "text_replacements",
   "website_email_tab",
@@ -170,6 +172,18 @@
    "label": "Disable Update Notifications"
   },
   {
+   "fieldname": "frappe_cloud_section",
+   "fieldtype": "Section Break",
+   "label": "Frappe Cloud"
+  },
+  {
+   "default": "1",
+   "description": "Hides the Manage Billing menu, the trial banner and the Frappe Cloud support and update links from the client's administrators. Turn off if the client pays Frappe Cloud directly.",
+   "fieldname": "hide_frappe_cloud",
+   "fieldtype": "Check",
+   "label": "Hide Frappe Cloud billing and links"
+  },
+  {
    "description": "Exact-match replacements for text in the UI, saved as Translations for the system language.",
    "fieldname": "text_section",
    "fieldtype": "Section Break",
@@ -230,7 +244,7 @@
  ],
  "issingle": 1,
  "links": [],
- "modified": "2026-11-01 12:00:00.000000",
+ "modified": "2026-11-01 18:00:00.000000",
  "modified_by": "Administrator",
  "module": "FlewOps Whitelabel",
  "name": "Whitelabel Settings",

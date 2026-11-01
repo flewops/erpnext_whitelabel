@@ -147,6 +147,22 @@ class TestWhitelabelSettings(IntegrationTestCase):
 		self.assertEqual(app_data[1]["app_logo_url"], LOGO)
 		self.assertEqual(app_data[2]["app_logo_url"], ["/h.svg"])  # not a framework app, not overridden
 
+	def test_frappe_cloud_hidden(self):
+		def boot():
+			return frappe._dict(is_fc_site=True, site_info={"name": "acme.frappe.cloud"})
+
+		self.update(hide_frappe_cloud=1)
+		bootinfo = boot()
+		branding.extend_bootinfo(bootinfo)
+		self.assertFalse(bootinfo.is_fc_site)
+		self.assertIsNone(bootinfo.site_info)
+
+		self.update(hide_frappe_cloud=0)
+		bootinfo = boot()
+		branding.extend_bootinfo(bootinfo)
+		self.assertTrue(bootinfo.is_fc_site)
+		self.assertEqual(bootinfo.site_info, {"name": "acme.frappe.cloud"})
+
 	def test_footer_context(self):
 		self.update(hide_powered_by=1)
 		context = frappe._dict(footer_powered=None)
