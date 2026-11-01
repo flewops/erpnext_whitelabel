@@ -1,0 +1,101 @@
+name: CI
+
+# lint  -> the repo's pre-commit hooks
+# tests -> the app's integration tests on a fresh v16 site with ERPNext, at the same Frappe /
+#          ERPNext releases the FlewOps client images pin
+
+on:
+  push:
+    branches: [version-16, main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}-${{ github.event.number }}
+  cancel-in-progress: true
+
+env:
+  FRAPPE_BRANCH: v16.54.0
+  ERPNEXT_BRANCH: v16.53.0
+  PYTHON_VERSION: "3.14.10"
+  NODE_VERSION: "24.22.2"
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - uses: pre-commit/action@v3.0.1
+
+  tests:
+    name: Server tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    services:
+      redis-cache:
+        image: redis:alpine
+        ports:
+          - 13000:6379
+      redis-queue:
+        image: redis:alpine
+        ports:
+          - 11000:6379
+      mariadb:
+        image: mariadb:11.8
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: --health-cmd="mariadb-admin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install MariaDB client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mariadb-client
+
+      - name: Init bench
+        run: |
+          pip install frappe-bench
+          bench init --frappe-branch "$FRAPPE_BRANCH" --skip-redis-config-generation --skip-assets \
+            --python "$(which python)" ~/frappe-bench
+
+      - name: Get apps
+        working-directory: /home/runner/frappe-bench
+        run: |
+          bench get-app --skip-assets --branch "$ERPNEXT_BRANCH" https://github.com/frappe/erpnext
+          bench get-app --skip-assets flewops_whitelabel "$GITHUB_WORKSPACE"
+          bench setup requirements --dev
+
+      - name: Create test site
+        working-directory: /home/runner/frappe-bench
+        run: |
+          bench new-site --db-root-password root --admin-password admin test_site
+          bench --site test_site install-app erpnext flewops_whitelabel
+          bench build --app frappe
+        env:
+          CI: "Yes"
+
+      - name: Run tests
+        working-directory: /home/runner/frappe-bench
+        run: |
+          bench --site test_site set-config allow_tests true
+          bench --site test_site run-tests --app flewops_whitelabel
+        env:
+          TYPE: server

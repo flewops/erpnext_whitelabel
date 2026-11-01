@@ -1,0 +1,254 @@
+{
+ "actions": [],
+ "creation": "2026-11-01 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "branding_tab",
+  "identity_section",
+  "app_name",
+  "column_break_identity",
+  "app_logo",
+  "browser_section",
+  "favicon",
+  "column_break_browser",
+  "splash_image",
+  "app_tiles_section",
+  "replace_framework_logos",
+  "app_overrides",
+  "desk_tab",
+  "help_section",
+  "hide_vendor_help",
+  "branded_about",
+  "column_break_help",
+  "support_label",
+  "support_url",
+  "notifications_section",
+  "disable_onboarding",
+  "column_break_notifications",
+  "disable_update_notifications",
+  "text_section",
+  "text_replacements",
+  "website_email_tab",
+  "website_section",
+  "hide_powered_by",
+  "column_break_website",
+  "footer_powered",
+  "email_section",
+  "disable_standard_email_footer",
+  "column_break_email",
+  "email_footer_address"
+ ],
+ "fields": [
+  {
+   "fieldname": "branding_tab",
+   "fieldtype": "Tab Break",
+   "label": "Branding"
+  },
+  {
+   "fieldname": "identity_section",
+   "fieldtype": "Section Break",
+   "label": "Identity"
+  },
+  {
+   "description": "Replaces \"Frappe\" / \"ERPNext\" in the browser tab, on the login page and in login emails.",
+   "fieldname": "app_name",
+   "fieldtype": "Data",
+   "label": "App Name"
+  },
+  {
+   "fieldname": "column_break_identity",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Shown on the login page and in the desk. Upload it as a public file: the login page is seen by guests.",
+   "fieldname": "app_logo",
+   "fieldtype": "Attach Image",
+   "label": "Logo"
+  },
+  {
+   "fieldname": "browser_section",
+   "fieldtype": "Section Break",
+   "label": "Browser"
+  },
+  {
+   "description": "Falls back to the logo.",
+   "fieldname": "favicon",
+   "fieldtype": "Attach Image",
+   "label": "Favicon"
+  },
+  {
+   "fieldname": "column_break_browser",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Falls back to the logo.",
+   "fieldname": "splash_image",
+   "fieldtype": "Attach Image",
+   "label": "Loading Screen Image"
+  },
+  {
+   "description": "The apps screen, the dock and the sidebar header show each app with its own logo and title.",
+   "fieldname": "app_tiles_section",
+   "fieldtype": "Section Break",
+   "label": "App Tiles"
+  },
+  {
+   "default": "1",
+   "fieldname": "replace_framework_logos",
+   "fieldtype": "Check",
+   "label": "Use the logo for the Frappe and ERPNext tiles"
+  },
+  {
+   "description": "Rename or re-logo any installed app's tile. Applied after the option above.",
+   "fieldname": "app_overrides",
+   "fieldtype": "Table",
+   "label": "App Overrides",
+   "options": "Whitelabel App Override"
+  },
+  {
+   "fieldname": "desk_tab",
+   "fieldtype": "Tab Break",
+   "label": "Desk"
+  },
+  {
+   "fieldname": "help_section",
+   "fieldtype": "Section Break",
+   "label": "Help Menu"
+  },
+  {
+   "default": "1",
+   "description": "Hides standard help menu rows that lead off the site (e.g. Frappe Support) and the documentation links on each page.",
+   "fieldname": "hide_vendor_help",
+   "fieldtype": "Check",
+   "label": "Hide Frappe / ERPNext help links"
+  },
+  {
+   "default": "1",
+   "description": "Replaces the Frappe About dialog with the app name and logo. System Managers also see the installed app versions.",
+   "fieldname": "branded_about",
+   "fieldtype": "Check",
+   "label": "Branded About dialog"
+  },
+  {
+   "fieldname": "column_break_help",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Support",
+   "fieldname": "support_label",
+   "fieldtype": "Data",
+   "label": "Support Link Label"
+  },
+  {
+   "description": "Adds a row to the help menu, e.g. your helpdesk or WhatsApp support link.",
+   "fieldname": "support_url",
+   "fieldtype": "Data",
+   "label": "Support Link URL",
+   "options": "URL"
+  },
+  {
+   "fieldname": "notifications_section",
+   "fieldtype": "Section Break",
+   "label": "Notifications"
+  },
+  {
+   "default": "1",
+   "fieldname": "disable_onboarding",
+   "fieldtype": "Check",
+   "label": "Disable Onboarding"
+  },
+  {
+   "fieldname": "column_break_notifications",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "description": "Hides the new-version and changelog popups.",
+   "fieldname": "disable_update_notifications",
+   "fieldtype": "Check",
+   "label": "Disable Update Notifications"
+  },
+  {
+   "description": "Exact-match replacements for text in the UI, saved as Translations for the system language.",
+   "fieldname": "text_section",
+   "fieldtype": "Section Break",
+   "label": "Text Replacements"
+  },
+  {
+   "fieldname": "text_replacements",
+   "fieldtype": "Table",
+   "label": "Text Replacements",
+   "options": "Whitelabel Text Replacement"
+  },
+  {
+   "fieldname": "website_email_tab",
+   "fieldtype": "Tab Break",
+   "label": "Website & Email"
+  },
+  {
+   "fieldname": "website_section",
+   "fieldtype": "Section Break",
+   "label": "Website"
+  },
+  {
+   "default": "1",
+   "fieldname": "hide_powered_by",
+   "fieldtype": "Check",
+   "label": "Hide \"Built on Frappe\" in the website footer"
+  },
+  {
+   "fieldname": "column_break_website",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Shown in its place, e.g. \"Powered by Acme\". HTML is allowed.",
+   "fieldname": "footer_powered",
+   "fieldtype": "Small Text",
+   "label": "Footer Credit"
+  },
+  {
+   "fieldname": "email_section",
+   "fieldtype": "Section Break",
+   "label": "Email"
+  },
+  {
+   "default": "1",
+   "fieldname": "disable_standard_email_footer",
+   "fieldtype": "Check",
+   "label": "Disable Standard Email Footer"
+  },
+  {
+   "fieldname": "column_break_email",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "email_footer_address",
+   "fieldtype": "Small Text",
+   "label": "Email Footer Address"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-11-01 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "FlewOps Whitelabel",
+ "name": "Whitelabel Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
